@@ -1,7 +1,4 @@
-import "./globals.css";
-
 import ReactDOM from "react-dom/client";
-
 import { BrowserRouter } from "react-router-dom";
 import QueryProvider from "./lib/react-query/QueryProvider";
 import { AuthProvider } from "./context/AuthContext";

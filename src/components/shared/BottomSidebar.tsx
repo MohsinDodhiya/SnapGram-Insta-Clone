@@ -10,7 +10,7 @@ const BottomSidebar = () => {
         const isActive = pathname === link.route;
         return (
           <Link
-            key={`bottombar-${link.label}`}
+            key={`bottom-bar ${link.label}`}
             to={link.route}
             className={`${
               isActive && "rounded-[10px] bg-primary-500 "
