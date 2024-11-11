@@ -89,3 +89,14 @@ export async function getCurrentUser() {
     return null;
   }
 }
+
+// ============================== Delete Session
+export async function signOutAccount() {
+  try {
+    const session = await account.deleteSession("current");
+    return session;
+  } catch (error) {
+    console.log("Appwrite :: signOutAccount ::  error : ", error);
+    return null;
+  }
+}
