@@ -67,10 +67,21 @@ export async function signInAccount(user: { email: string; password: string }) {
   }
 }
 
+// ============================== GET ACCOUNT
+export async function getAccount() {
+  try {
+    const currentAccount = await account.get();
+    return currentAccount;
+  } catch (error) {
+    console.log("Appwrite :: getAccount ::  error : ", error);
+    return null;
+  }
+}
+
 // ============================== GET USER
 export async function getCurrentUser() {
   try {
-    const currentAccount = await account.get();
+    const currentAccount = await getAccount();
     if (!currentAccount) throw Error;
 
     const currentUser = await database.listDocuments(
