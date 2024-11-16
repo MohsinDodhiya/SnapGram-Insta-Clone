@@ -1,9 +1,12 @@
 import { Models } from "appwrite";
 
-
-import { useGetRecentPosts } from "@/lib/react-query/queryesAndMutations";
+import {
+  useGetRecentPosts,
+  useGetUsers,
+} from "@/lib/react-query/queryesAndMutations";
 import PostCard from "@/components/shared/PostCard";
 import Loader from "@/components/shared/Loader";
+import UserCard from "@/components/shared/UserCard";
 
 const Home = () => {
   const {
@@ -11,10 +14,19 @@ const Home = () => {
     isLoading: isPostLoading,
     isError: isErrorPosts,
   } = useGetRecentPosts();
-  if (isErrorPosts) {
+  const {
+    data: creaters,
+    isLoading: isCreatersLoading,
+    isError: isErrorCreaters,
+  } = useGetUsers(10);
+
+  if (isErrorPosts || isErrorCreaters) {
     return (
       <div className="flex flex-1">
         <div className="home-container">
+          <p className="body-medium text-light-1">Something bad happened</p>
+        </div>
+        <div className="home-creators">
           <p className="body-medium text-light-1">Something bad happened</p>
         </div>
       </div>
@@ -23,14 +35,30 @@ const Home = () => {
   return (
     <div className="flex flex-1">
       <div className="home-container">
-        <div className="h3-bold md:h2-bold text-left w-full">Home Feed</div>
-        {isPostLoading && !posts ? (
+        <div className="home-posts">
+          <div className="h3-bold md:h2-bold text-left w-full">Home Feed</div>
+          {isPostLoading && !posts ? (
+            <Loader />
+          ) : (
+            <ul className="flex flex-col flex-1 gap-9 w-full">
+              {posts?.documents.map((post: Models.Document) => (
+                <li key={post.$id} className="flex justify-center w-full">
+                  <PostCard post={post} />
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+      </div>
+      <div className="home-creators">
+        <h3 className="h3-bold text-light-1">Top Creators</h3>
+        {isCreatersLoading && !creaters ? (
           <Loader />
         ) : (
-          <ul className="flex flex-col flex-1 gap-9 w-full">
-            {posts?.documents.map((post: Models.Document) => (
-              <li key={post.$id} className="flex justify-center w-full">
-                <PostCard post={post} />
+          <ul className="grid 2xl:grid-cols-2 gap-6">
+            {creaters?.documents.map((creater) => (
+              <li key={creater.$id}>
+                <UserCard user={creater} />
               </li>
             ))}
           </ul>
