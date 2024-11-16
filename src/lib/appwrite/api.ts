@@ -29,7 +29,7 @@ export async function createUserAccount(user: INewUser) {
 
     return newUser;
   } catch (error) {
-    console.log("Appwrite :: createNewUser ::  error : ", error);
+    console.log("Appwrite :: createUserAccount ::  error : ", error);
     return null;
   }
 }
@@ -78,7 +78,7 @@ export async function getAccount() {
   }
 }
 
-// ============================== GET USER
+// ============================== GET CURRENT USER
 export async function getCurrentUser() {
   try {
     const currentAccount = await getAccount();
@@ -100,7 +100,7 @@ export async function getCurrentUser() {
   }
 }
 
-// ============================== Delete Session
+// ============================== DELETE SESSION
 export async function signOutAccount() {
   try {
     const session = await account.deleteSession("current");
@@ -175,7 +175,7 @@ export async function uploadFile(file: File) {
   }
 }
 
-// ============================== FILE PREVIEW
+// ============================== GET FILE URL (FILE PREVIEW)
 export function getFilePreview(fileid: string) {
   try {
     const fileUrl = storage.getFilePreview(
@@ -207,7 +207,7 @@ export async function deleteFile(fileid: string) {
   }
 }
 
-// ============================== GET RECENT POST
+// ============================== GET POST
 export async function getRecentPosts() {
   try {
     const posts = await database.listDocuments(
@@ -223,57 +223,25 @@ export async function getRecentPosts() {
   }
 }
 
-// ============================== LIKE POST
-export async function likePost(postId: string, likesArray: string[]) {
+// ============================== GET INFINITE POSTS
+export async function getInfinitePosts({ pageParam }: { pageParam: number }) {
+  const queries: any[] = [Query.orderDesc("$updatedAt"), Query.limit(10)];
+
+  if (pageParam) {
+    queries.push(Query.cursorAfter(pageParam.toString()));
+  }
+
   try {
-    const updatedDocument = await database.updateDocument(
+    const posts = await database.listDocuments(
       appwriteConfig.databaseId,
       appwriteConfig.postsCollectionId,
-      postId,
-      {
-        likes: likesArray,
-      }
+      queries
     );
-    if (!updatedDocument) throw Error;
-    return updatedDocument;
-  } catch (error) {
-    console.log("Appwrite :: likePost ::  error : ", error);
-    return null;
-  }
-}
+    if (!posts) throw Error;
 
-// ============================== SAVE POST
-export async function savePost(postId: string, userId: string) {
-  try {
-    const updatedDocument = await database.createDocument(
-      appwriteConfig.databaseId,
-      appwriteConfig.savesCollectionId,
-      ID.unique(),
-      {
-        user: userId,
-        post: postId,
-      }
-    );
-    if (!updatedDocument) throw Error;
-    return updatedDocument;
+    return posts;
   } catch (error) {
-    console.log("Appwrite :: savePost ::  error : ", error);
-    return null;
-  }
-}
-
-// ============================== DELETE SAVE POST
-export async function deleteSavedPost(savedRecordId: string) {
-  try {
-    const statusCode = await database.deleteDocument(
-      appwriteConfig.databaseId,
-      appwriteConfig.savesCollectionId,
-      savedRecordId
-    );
-    if (!statusCode) throw Error;
-    return { status: "ok" };
-  } catch (error) {
-    console.log("Appwrite :: deleteSavePost ::  error : ", error);
+    console.log("Appwrite :: getInfinitePosts ::  error : ", error);
     return null;
   }
 }
@@ -375,28 +343,62 @@ export async function deletePost(postId: string, imageId: string) {
   }
 }
 
-// ============================== GET INFINITE POSTS
-export async function getInfinitePosts({ pageParam }: { pageParam: number }) {
-  const queries: any[] = [Query.orderDesc("$updatedAt"), Query.limit(10)];
-
-  if (pageParam) {
-    queries.push(Query.cursorAfter(pageParam.toString()));
-  }
-
+// ============================== LIKE / UNLIKE POST
+export async function likePost(postId: string, likesArray: string[]) {
   try {
-    const posts = await database.listDocuments(
+    const updatedDocument = await database.updateDocument(
       appwriteConfig.databaseId,
       appwriteConfig.postsCollectionId,
-      queries
+      postId,
+      {
+        likes: likesArray,
+      }
     );
-    if (!posts) throw Error;
-
-    return posts;
+    if (!updatedDocument) throw Error;
+    return updatedDocument;
   } catch (error) {
-    console.log("Appwrite :: getInfinitePosts ::  error : ", error);
+    console.log("Appwrite :: likePost ::  error : ", error);
     return null;
   }
 }
+
+// ============================== SAVE POST
+export async function savePost(postId: string, userId: string) {
+  try {
+    const updatedDocument = await database.createDocument(
+      appwriteConfig.databaseId,
+      appwriteConfig.savesCollectionId,
+      ID.unique(),
+      {
+        user: userId,
+        post: postId,
+      }
+    );
+    if (!updatedDocument) throw Error;
+    return updatedDocument;
+  } catch (error) {
+    console.log("Appwrite :: savePost ::  error : ", error);
+    return null;
+  }
+}
+
+// ============================== DELETE SAVEd POST
+export async function deleteSavedPost(savedRecordId: string) {
+  try {
+    const statusCode = await database.deleteDocument(
+      appwriteConfig.databaseId,
+      appwriteConfig.savesCollectionId,
+      savedRecordId
+    );
+    if (!statusCode) throw Error;
+    return { status: "ok" };
+  } catch (error) {
+    console.log("Appwrite :: deleteSavePost ::  error : ", error);
+    return null;
+  }
+}
+
+
 
 // ============================== SEARCH POST
 export async function searchPosts(searchTerm: string) {

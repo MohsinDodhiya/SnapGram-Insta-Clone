@@ -6,7 +6,6 @@ import {
   EditPost,
   Explore,
   Home,
-  LikedPosts,
   PostDetails,
   Profile,
   Saved,
@@ -18,6 +17,8 @@ import AuthLayout from "./_auth/AuthLayout";
 import RootLayout from "./_root/RootLayout";
 import { Toaster } from "@/components/ui/toaster";
 
+import "./globals.css";
+
 const App = () => {
   return (
     <main className="flex h-screen">
@@ -27,6 +28,7 @@ const App = () => {
           <Route path="/sign-in" element={<SignInForm />} />
           <Route path="/sign-up" element={<SignUpForm />} />
         </Route>
+        
         {/* private routes */}
         <Route element={<RootLayout />}>
           <Route index element={<Home />} />
