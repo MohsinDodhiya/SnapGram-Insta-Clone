@@ -1,7 +1,7 @@
 import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import { Button } from "../ui/button";
 import { useSignOutAccount } from "@/lib/react-query/queryesAndMutations";
-import { useUserContext } from "@/context/AuthContext";
+import { INITIAL_USER, useUserContext } from "@/context/AuthContext";
 import { sidebarLinks } from "@/constants";
 import { INavLink } from "@/types";
 
@@ -9,8 +9,18 @@ const LeftSidebar = () => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
 
-  const { user } = useUserContext();
+  const { user, setIsAuthenticated, setUser } = useUserContext();
   const { mutate: signOut } = useSignOutAccount();
+
+  const handleSignOut = async (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    e.preventDefault();
+    signOut();
+    setIsAuthenticated(false);
+    setUser(INITIAL_USER);
+    navigate("/sign-in");
+  };
 
   return (
     <nav className="leftsidebar">
@@ -25,7 +35,7 @@ const LeftSidebar = () => {
         </Link>
         <Link to={`/profile/${user.id}`} className="flex gap-3 items-center">
           <img
-            src={user.imageUrl || "/assets/images/profile-placeholder.svg"}
+            src={user.imageUrl || "/assets/icons/profile-placeholder.svg"}
             className="h-8 w-8 rounded-full"
             alt="profile"
           />
@@ -63,7 +73,11 @@ const LeftSidebar = () => {
           })}
         </ul>
       </div>
-      <Button variant="ghost" className="shad-button_ghost">
+      <Button
+        variant="ghost"
+        className="shad-button_ghost"
+        onClick={(e) => handleSignOut(e)}
+      >
         <img src="/assets/icons/logout.svg" alt="logout" />
         <p className="small-medium lg:base-medium">Logout</p>
       </Button>
