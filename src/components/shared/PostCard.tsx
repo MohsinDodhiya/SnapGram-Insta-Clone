@@ -40,6 +40,7 @@ const PostCard = ({ post }: PostCardProps) => {
             </div>
           </div>
         </div>
+        
         <Link
           to={`/update-post/${post.$id}`}
           className={`${user.id !== post.creater.$id && "hidden"}`}
