@@ -271,7 +271,7 @@ export async function deleteSavedPost(savedRecordId: string) {
 // ============================== GET POST BY ID
 export async function getPostById(postId?: string) {
   if (!postId) throw Error;
-  
+
   try {
     const post = await database.getDocument(
       appwriteConfig.databaseId,
@@ -361,6 +361,46 @@ export async function deletePost(postId: string, imageId: string) {
     return { status: "ok" };
   } catch (error) {
     console.log("Appwrite :: deletePost ::  error : ", error);
+    return null;
+  }
+}
+
+// ============================== GET INFINITE POSTS
+export async function getInfinitePosts({ pageParam }: { pageParam: number }) {
+  const queries: any[] = [Query.orderDesc("$updatedAt"), Query.limit(10)];
+
+  if (pageParam) {
+    queries.push(Query.cursorAfter(pageParam.toString()));
+  }
+
+  try {
+    const posts = await database.listDocuments(
+      appwriteConfig.databaseId,
+      appwriteConfig.postsCollectionId,
+      queries
+    );
+    if (!posts) throw Error;
+
+    return posts;
+  } catch (error) {
+    console.log("Appwrite :: getInfinitePosts ::  error : ", error);
+    return null;
+  }
+}
+
+// ============================== SEARCH POST
+export async function searchPosts(searchTerm: string) {
+  try {
+    const posts = await database.listDocuments(
+      appwriteConfig.databaseId,
+      appwriteConfig.postsCollectionId,
+      [Query.search("caption", searchTerm)]
+    );
+    if (!posts) throw Error;
+
+    return posts;
+  } catch (error) {
+    console.log("Appwrite :: searchPosts ::  error : ", error);
     return null;
   }
 }
