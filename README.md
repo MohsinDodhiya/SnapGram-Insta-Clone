@@ -1,6 +1,6 @@
 # SnapGram - A Modern Social Media App Clone 🌐
 
-![SnapGram Live]([LIVE-WEB](https://social-media-mohsin-dodhiya.vercel.app/))
+[Check out SnapGram Live](https://social-media-mohsin-dodhiya.vercel.app/)
 
 **SnapGram** is a high-performance **social media app clone** inspired by popular platforms like Instagram. Built with a cutting-edge stack (React.js, Appwrite, ShadCN, TanStack Query, and Zod), this project showcases modern features like **real-time data fetching**, **drag-and-drop uploads**, and **infinite scrolling**.
 
