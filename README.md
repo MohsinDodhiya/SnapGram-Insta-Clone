@@ -1,50 +1,87 @@
-# React + TypeScript + Vite
+# SnapGram - A Social Media Clone  
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+SnapGram is a feature-rich social media application designed to replicate and enhance the experience of modern social media platforms. Built with a robust stack of frontend and backend technologies, it allows users to share posts, interact with others, and explore an engaging and dynamic interface.  
 
-Currently, two official plugins are available:
+## 🚀 Live Demo  
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+[Check out SnapGram Live](https://social-media-mohsin-dodhiya-1m8pmbjwa.vercel.app/)  
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## 📝 Table of Contents  
+- [Features](#features)  
+- [Tech Stack](#tech-stack)  
+- [Screenshots](#screenshots)  
+- [Installation](#installation)  
+- [Usage](#usage)  
+- [Contributing](#contributing)  
+- [License](#license)  
 
-- Configure the top-level `parserOptions` property like this:
+---
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+## 🌟 Features  
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+- **User Authentication**:  
+  Secure user signup and login using Appwrite's authentication services.  
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+- **Post Sharing**:  
+  Upload posts effortlessly with drag-and-drop functionality via Dropzone.  
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+- **Infinite Scrolling**:  
+  Seamless scrolling for better user experience, powered by Intersection Observer and TanStack/React Query.  
+
+- **Form Handling and Validation**:  
+  User-friendly forms built using React Hook Form with validation powered by Zod.  
+
+- **Responsive Design**:  
+  UI designed using ShadCN components for accessibility and a consistent, modern look across all devices.  
+
+- **Real-time Updates**:  
+  Ensure dynamic data fetching and updating using React Query.  
+
+- **Global State Management**:  
+  Efficiently manage global app state using React Context API.  
+
+- **Drag-and-Drop Media Upload**:  
+  Simplified media uploads using Dropzone for better usability.  
+
+---
+
+## 🛠 Tech Stack  
+
+### Frontend  
+- **React.js** - A JavaScript library for building user interfaces.  
+- **ShadCN** - UI components for enhanced design and accessibility.  
+- **Context API** - Lightweight state management for React.  
+- **Intersection Observer** - For handling infinite scrolling.  
+- **React Hook Form** - For efficient form creation and validation.  
+- **Zod** - For schema-based form validation.  
+- **Dropzone** - Drag-and-drop file upload functionality.  
+- **TanStack/React-Query** - Data fetching, caching, and synchronization.  
+
+### Backend  
+- **Appwrite** - Backend-as-a-service for authentication, database, and storage.  
+
+---
+
+## 📸 Screenshots  
+
+### Home Page  
+_Add a screenshot of the main feed with posts._  
+
+### Post Upload  
+_Add a screenshot showing the drag-and-drop upload interface._  
+
+### User Profile  
+_Add a screenshot of the user profile page._  
+
+---
+
+## 📦 Installation  
+
+Follow these steps to set up the project locally:  
+
+1. **Clone the Repository**:  
+   ```bash  
+   git clone https://github.com/MohsinDodhiya/SnapGram-Insta-Clone.git  
+   cd SnapGram-Insta-Clone  
