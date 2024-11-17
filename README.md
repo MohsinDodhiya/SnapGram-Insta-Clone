@@ -1,8 +1,3 @@
-Here's a fully SEO-optimized `README.md` for your SnapGram project, complete with placeholders for images, detailed sections, and keywords to improve visibility. This version is designed to be comprehensive and attractive for both developers and search engines.
-
----
-
-```markdown
 # SnapGram - A Modern Social Media App Clone 🌐
 
 ![SnapGram Banner](./images/banner.png)
