@@ -9,4 +9,9 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  build: {
+    outDir: "dist", // Output directory for build files
+    emptyOutDir: true, // Clears the output directory before building
+  },
+  base: "/", // Ensures the app runs correctly when deployed at the root
 });
