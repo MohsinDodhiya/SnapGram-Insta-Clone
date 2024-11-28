@@ -15,26 +15,30 @@ type PostStarsProps = {
   post: Models.Document;
   userId: string;
 };
+
 const PostStars = ({ post, userId }: PostStarsProps) => {
   const location = useLocation();
-  const likesList = post.likes?.map((user: Models.Document) => user.$id);
+
+  // Safely handle post.likes (use empty array if undefined)
+  const likesList = post.likes?.map((user: Models.Document) => user.$id) || [];
 
   const [likes, setLikes] = useState<string[]>(likesList);
   const [isSaved, setIsSaved] = useState(false);
 
   const { mutate: likePost } = useLikePost();
-  const { mutate: savePost, isLoading: isSaveingPost } = useSavePost();
+  const { mutate: savePost, isLoading: isSavingPost } = useSavePost();
   const { mutate: deleteSavedPost, isLoading: isDeletingPost } =
     useDeleteSavedPost();
   const { data: currentUser } = useGetCurrentUser();
 
-  const savePostRecord = currentUser?.save.find(
-    (record: Models.Document) => record.post.$id === post.$id
+  // Safely handle currentUser.save (use empty array if undefined)
+  const savePostRecord = currentUser?.save?.find(
+    (record: Models.Document) => record.post?.$id === post.$id
   );
 
   useEffect(() => {
     setIsSaved(!!savePostRecord); // savePostRecord ? true : false
-  }, [currentUser]);
+  }, [savePostRecord]);
 
   const handleLikePost = (
     e: React.MouseEvent<HTMLImageElement, MouseEvent>
@@ -68,9 +72,11 @@ const PostStars = ({ post, userId }: PostStarsProps) => {
       setIsSaved(true);
     }
   };
+
   const containerStyles = location.pathname.startsWith("/profile")
     ? "w-full"
     : "";
+
   return (
     <div
       className={`flex justify-between items-center z-20 ${containerStyles}`}
@@ -86,13 +92,13 @@ const PostStars = ({ post, userId }: PostStarsProps) => {
           className="cursor-pointer"
           width={20}
           height={20}
-          onClick={(e) => handleLikePost(e)}
+          onClick={handleLikePost}
         />
         <p className="small-medium lg:base-medium">{likes.length}</p>
       </div>
 
       <div className="flex gap-2">
-        {isSaveingPost || isDeletingPost ? (
+        {isSavingPost || isDeletingPost ? (
           <Loader />
         ) : (
           <img
@@ -101,7 +107,7 @@ const PostStars = ({ post, userId }: PostStarsProps) => {
             className="cursor-pointer"
             width={20}
             height={20}
-            onClick={(e) => handleSavePost(e)}
+            onClick={handleSavePost}
           />
         )}
       </div>
