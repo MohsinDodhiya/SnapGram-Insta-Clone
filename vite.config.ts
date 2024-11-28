@@ -10,8 +10,8 @@ export default defineConfig({
     },
   },
   build: {
-    outDir: "dist", // Output directory for build files
-    emptyOutDir: true, // Clears the output directory before building
+    outDir: "dist",
+    emptyOutDir: true,
   },
-  base: "/", // Ensures the app runs correctly when deployed at the root
+  base: "/", // Ensure this matches your deployment base
 });
