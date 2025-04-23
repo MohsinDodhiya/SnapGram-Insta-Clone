@@ -174,21 +174,19 @@ export async function uploadFile(file: File) {
     return null;
   }
 }
-
 // ============================== GET FILE URL (FILE PREVIEW)
 export function getFilePreview(fileid: string) {
   try {
-    const fileUrl = storage.getFilePreview(
-      appwriteConfig.storageId,
-      fileid,
-      2000,
-      2000,
-      "top",
-      100
-    );
+    if (!fileid) {
+      console.log("Appwrite :: getFilePreview :: No file ID provided");
+      return null;
+    }
+
+    const fileUrl = storage.getFileView(appwriteConfig.storageId, fileid);
+
     return fileUrl;
   } catch (error) {
-    console.log("Appwrite :: getFilePreview ::  error : ", error);
+    console.error("Appwrite :: getFilePreview :: error:", error);
     return null;
   }
 }
