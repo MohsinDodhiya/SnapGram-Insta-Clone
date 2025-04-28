@@ -24,6 +24,7 @@ const GridPostList = ({
           <Link to={`/posts/${post.$id}`} className="grid-post_link">
             <img
               src={post.imageUrl}
+              loading="lazy"
               alt="Post"
               className="h-full w-full object-cover"
             />
@@ -34,6 +35,7 @@ const GridPostList = ({
               <div className="flex items-center justify-start gap-2 flex-1">
                 <img
                   src={post.creater.imageUrl}
+                  loading="lazy"
                   alt="Creator"
                   className="w-8 h-8 rounded-full"
                 />

@@ -21,6 +21,7 @@ const PostCard = ({ post }: PostCardProps) => {
                 post?.creater?.imageUrl ||
                 "/assets/icons/profile-placeholder.svg"
               }
+              loading="lazy"
               alt="creater"
               className="rounded-full w-12 lg:h12"
             />
@@ -45,7 +46,7 @@ const PostCard = ({ post }: PostCardProps) => {
           to={`/update-post/${post.$id}`}
           className={`${user.id !== post.creater.$id && "hidden"}`}
         >
-          <img src="/assets/icons/edit.svg" alt="edit" width={20} height={20} />
+          <img src="/assets/icons/edit.svg" loading="lazy" alt="edit" width={20} height={20} />
         </Link>
       </div>
       <Link to={`/posts/${post.$id}`}>
@@ -61,6 +62,7 @@ const PostCard = ({ post }: PostCardProps) => {
         </div>
         <img
           src={post.imageUrl || "/assets/icons/profile-placeholder.svg"}
+          loading="lazy"
           alt="post image"
           className="post-card_img"
         />

@@ -174,6 +174,7 @@ export async function uploadFile(file: File) {
     return null;
   }
 }
+
 // ============================== GET FILE URL (FILE PREVIEW)
 export function getFilePreview(fileid: string) {
   try {
@@ -182,7 +183,8 @@ export function getFilePreview(fileid: string) {
       return null;
     }
 
-    const fileUrl = storage.getFileView(appwriteConfig.storageId, fileid);
+    // 👇 Change to getFilePreview with resize width & height
+    const fileUrl = storage.getFilePreview(appwriteConfig.storageId, fileid, 400, 400); 
 
     return fileUrl;
   } catch (error) {
@@ -190,6 +192,7 @@ export function getFilePreview(fileid: string) {
     return null;
   }
 }
+
 
 // ============================== DELETE FILE
 export async function deleteFile(fileid: string) {
